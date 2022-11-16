@@ -4,7 +4,11 @@
  */
 package com.ooslab.mms.ui;
 
+import com.ooslab.mms.logic.Student;
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -69,9 +73,24 @@ public class ImportPage extends javax.swing.JPanel {
 
     private void importBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importBtnActionPerformed
         // do import stuff here.
+        
+        JFileChooser fc = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV FILES", "csv");
+        fc.setFileFilter(filter);
+        int retVal = fc.showOpenDialog(this);
+        if(retVal == JFileChooser.APPROVE_OPTION){
+            File file = fc.getSelectedFile();
+            if(!Student.addStudents(file)){
+                return;
+            }
+        } else {
+            return;
+        }
+        
         pane.removeTabAt(0);
         pane.insertTab("Transaction", null, new TransactionsPage(), "Transaction", 0);
         pane.setSelectedIndex(0);
+        
     }//GEN-LAST:event_importBtnActionPerformed
 
 

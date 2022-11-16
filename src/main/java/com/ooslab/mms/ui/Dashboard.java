@@ -4,6 +4,7 @@
  */
 package com.ooslab.mms.ui;
 
+import com.ooslab.mms.logic.Student;
 import javax.swing.JPanel;
 
 /**
@@ -17,8 +18,16 @@ public class Dashboard extends javax.swing.JFrame {
      */
     public Dashboard() {
         initComponents();
-        JPanel transactionPanel = new ImportPage(jTabbedPane1);
-        jTabbedPane1.addTab("Import", transactionPanel);
+        JPanel transactionPanel;
+        String pageTitle;
+        if(Student.isEmpty()){
+            pageTitle = "Import";
+            transactionPanel = new ImportPage(jTabbedPane1);
+        } else {
+            pageTitle = "Transactions";
+            transactionPanel = new TransactionsPage();
+        }
+        jTabbedPane1.addTab(pageTitle, transactionPanel);
         
         JPanel productPanel = new ProductPage();
         jTabbedPane1.addTab("Products", productPanel);
